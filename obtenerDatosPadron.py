@@ -1,7 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
+import tkinter as tk
+from tkinter import filedialog
 
-encontrados=0
+
 
 def scrape_pami_page(beneficio, parent):
     # Construir la URL con los parámetros proporcionados
@@ -15,7 +17,7 @@ def scrape_pami_page(beneficio, parent):
         # Analizar el contenido HTML de la página
         soup = BeautifulSoup(response.content, 'html.parser')
         
-         # Encontrar el nombre y apellido del beneficiario
+        # Encontrar el nombre y apellido del beneficiario
         nombre_apellido_tag = soup.find('td', class_='grisClaro').find_all('p')[0]
         nombre_apellido = nombre_apellido_tag.text.strip()
         
@@ -26,31 +28,48 @@ def scrape_pami_page(beneficio, parent):
         else:
             ugl = "No especificada"
         
-        # Retornar el nombre, apellido y UGL
-        return nombre_apellido, ugl
+        # Imprimir el nombre, apellido y UGL
+        if (nombre_apellido!=''):
+            print(f"Beneficio: {beneficio}, UGL: {ugl}")
+            return (nombre_apellido!='')
+        else:
+            False
+            
     else:
         print("No se pudo obtener la página")
+        return False
 
-with open('beneficios.txt', 'r') as file:
-    lineas = file.readlines()
+def ejecutar_scraping():
+    filename = filedialog.askopenfilename()  # Solicitar al usuario que seleccione el archivo
+    encontrados = 0
 
-# Iterar sobre las líneas del archivo
-for linea in lineas:
-    # Ejemplo de uso
-    beneficio =linea.strip()
+    with open(filename, 'r') as file:
+        lineas = file.readlines()
 
-# Extraer los últimos dos dígitos del beneficio para asignarlos al parentesco
-    parent = beneficio[-2:]
+    # Iterar sobre las líneas del archivo
+    for linea in lineas:
+        # Ejemplo de uso
+        beneficio = linea.strip().split(',')[0]
 
-# Eliminar los últimos dos dígitos del beneficio
-    beneficio = beneficio[:-2]
+        # Extraer los últimos dos dígitos del beneficio para asignarlos al parentesco
+        parent = beneficio[-2:]
 
-    nombre_apellido = scrape_pami_page(beneficio, parent)
-    if nombre_apellido!=('', ''):
-        encontrados = encontrados+1
-    else:
-        print(f"Beneficio no encontrado:{beneficio}")
+        # Eliminar los últimos dos dígitos del beneficio
+        beneficio = beneficio[:-2]
 
-print(encontrados)
+        if scrape_pami_page(beneficio, parent):
+            encontrados += 1
+        else:
+            print(f"Beneficio no encontrado: {beneficio}")
 
+    print(f"Total de beneficios encontrados: {encontrados}")
 
+# Configuración de la interfaz gráfica
+root = tk.Tk()
+root.title("Scraping de Beneficios PAMI")
+
+# Botón para seleccionar el archivo
+archivo_button = tk.Button(root, text="Seleccionar Archivo", command=ejecutar_scraping)
+archivo_button.pack(pady=20)
+
+root.mainloop()

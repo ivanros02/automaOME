@@ -52,7 +52,10 @@ with open('paraAceptar.txt', 'r') as file:
    lineas = file.readlines()
 
 #Iterar sobre las líneas del archivo y las horas y minutos deseados
-for linea, (hora, minuto) in zip(lineas, horas_y_minutos):
+for i, linea in enumerate(lineas):
+   # Calcular el índice de la lista de horas y minutos utilizando el operador de módulo
+   indice = i % len(horas_y_minutos)
+   hora, minuto = horas_y_minutos[indice]
    pyautogui.press('tab',presses=cantABenef)
    pyautogui.hotkey('ctrl','a')
    pyautogui.press('del')
@@ -66,13 +69,13 @@ for linea, (hora, minuto) in zip(lineas, horas_y_minutos):
    pyautogui.press('down')
    pyautogui.press('down')
    time.sleep(1)
-   x, y = pyautogui.locateCenterOnScreen('botonValidar.png') #click en validar
+   x, y = pyautogui.locateCenterOnScreen('./img/botonValidar.png') #click en validar
    pyautogui.click(x, y)
    time.sleep(4)
    pyautogui.press('tab',presses=3) #llegar a fecha
    pyautogui.press('enter') #pone la fecha actual por defecto
    time.sleep(1)
-   x, y = pyautogui.locateCenterOnScreen('horario.png') #click en horario
+   x, y = pyautogui.locateCenterOnScreen('./img/horario.png') #click en horario
    pyautogui.click(x, y)
    pyautogui.typewrite(hora)#hora
    pyautogui.press('tab')

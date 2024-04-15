@@ -1,25 +1,11 @@
-datos = '''
-F429
-F009
-F419
-F41.3
-F41
-F22
-F41
-F20.0
-F33
-F41.9
-F41.2
-F41.9
-F43.9
-F32.2
-F41.9
-F32.1
-F41.2
-F41.9
-'''
+# Abrir el archivo en modo lectura
+with open('beneficios13.04.txt', 'r') as file:
+    # Leer el contenido del archivo
+    data = file.read()
 
-# Eliminar los puntos de las cadenas
-datos_sin_puntos = datos.replace('.', '')
+# Reemplazar los puntos por una cadena vacía
+data_sin_puntos = data.replace('.', '')
 
-print(datos_sin_puntos)
+# Abrir el archivo en modo escritura y escribir el contenido sin puntos
+with open('beneficios13.04.txt', 'w') as file:
+    file.write(data_sin_puntos)
