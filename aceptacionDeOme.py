@@ -48,7 +48,7 @@ pyautogui.press('enter') # en boton ome
 time.sleep(3)
 
 # Leer el archivo de texto y obtener las líneas
-with open('paraAceptar.txt', 'r') as file:
+with open('aRealizar.txt', 'r') as file:
    lineas = file.readlines()
 
 #Iterar sobre las líneas del archivo y las horas y minutos deseados
@@ -68,25 +68,49 @@ for i, linea in enumerate(lineas):
    pyautogui.press('tab',presses=22)#llegar hasta ver las omes generadas para beneficio
    pyautogui.press('down')
    pyautogui.press('down')
-   time.sleep(1)
-   x, y = pyautogui.locateCenterOnScreen('./img/botonValidar.png') #click en validar
-   pyautogui.click(x, y)
-   time.sleep(4)
-   pyautogui.press('tab',presses=3) #llegar a fecha
-   pyautogui.press('enter') #pone la fecha actual por defecto
-   time.sleep(1)
-   x, y = pyautogui.locateCenterOnScreen('./img/horario.png') #click en horario
-   pyautogui.click(x, y)
-   pyautogui.typewrite(hora)#hora
-   pyautogui.press('tab')
-   pyautogui.press('tab')
-   pyautogui.typewrite(minuto)#minutos
-   pyautogui.press('tab')
-   pyautogui.press('tab') #hasta boca de atencion
-   pyautogui.press('c') # primera boca
-
-   pyautogui.press('tab') # hasta aceptar
-   pyautogui.press('enter') # acepto
+   pyautogui.press('down')
    time.sleep(3)
-   pyautogui.press('enter') #para aceptar
-   time.sleep(5)
+   
+   try:
+      x, y = pyautogui.locateCenterOnScreen('./img/botonValidar.png',confidence=0.9) #click en validar
+      pyautogui.click(x, y)
+      time.sleep(4)
+      pyautogui.press('tab',presses=3) #llegar a fecha
+      pyautogui.press('enter') #pone la fecha actual por defecto
+      time.sleep(1)
+      x, y = pyautogui.locateCenterOnScreen('./img/horario.png',confidence=0.7) #click en horario
+      pyautogui.click(x, y)
+      pyautogui.typewrite(hora)#hora
+      pyautogui.press('tab')
+      pyautogui.press('tab')
+      pyautogui.typewrite(minuto)#minutos
+      pyautogui.press('tab')
+      pyautogui.press('tab') #hasta boca de atencion
+      pyautogui.press('c') # primera boca
+
+      pyautogui.press('tab') # hasta aceptar
+      pyautogui.press('enter') # acepto
+      time.sleep(3)
+      pyautogui.press('enter') #para aceptar
+        # Escribir en el archivo que la línea fue aceptada
+      with open('resultadosACEPTACION.txt', 'a') as result_file:
+         result_file.write(f"{linea.strip()} - Aceptada\n")
+      time.sleep(5)
+     
+
+  
+   except pyautogui.ImageNotFoundException:
+      pyautogui.press('up')
+      pyautogui.press('up')
+      pyautogui.press('up')
+      pyautogui.press('up')
+      time.sleep(1)
+      x, y = pyautogui.locateCenterOnScreen('./img/panelAceptaction.png',confidence=0.7) #click en horario
+      pyautogui.click(x, y)
+      with open('resultadosACEPTACION.txt', 'a') as result_file:
+         result_file.write(f"{linea.strip()} - No Aceptada\n")
+      time.sleep(2)
+      
+      pass
+  
+   

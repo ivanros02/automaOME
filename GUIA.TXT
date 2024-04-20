@@ -1,0 +1,4 @@
+Primer paso: correr el archivo 'ExcelATXT.py'.
+Segundo paso: correr 'obtenerDatosPadron.py', mirar el archivo resultante con nombre 'resultadosPADRON' para investigar los no encontrados.
+Tercer paso : correr 'generarPENI.py' (asegurarse que el contenido del archivo 'resultadosPADRON' solo contenga afiliados validos).
+Cuarto paso: correr 'aceptacionDeOme.py'.

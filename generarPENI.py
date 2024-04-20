@@ -89,20 +89,22 @@ def ejecutar():
         
         # Validar si la orden fue generada correctamente
         try:
-            pyautogui.locateCenterOnScreen('./img/ordenGenerada.png', confidence=0.7)
+            pyautogui.locateCenterOnScreen('./img/ordenGenerada.png',confidence=0.7)
             generadas += 1
-            print(f'{numero} generada correctamente')
+            with open('resultadosGENERACION.txt', 'a') as result_file:
+                result_file.write(f"{linea.strip()} - GENERADA\n")
             pyautogui.press('tab')
             pyautogui.press('enter')
             pyautogui.press('up', presses=4)
             time.sleep(1)
         except pyautogui.ImageNotFoundException:
-            print(f'{numero} ERROR : ya generada')
+            with open('resultadosGENERACION.txt', 'a') as result_file:
+                result_file.write(f"{linea.strip()} - NO GENERADA\n")
             pyautogui.press('tab')
             pyautogui.press('enter')
             pyautogui.press('up', presses=4)
             time.sleep(1)
-            x, y = pyautogui.locateCenterOnScreen('./img/eliminarDiag.png',confidence=0.7)  # beneficio
+            x, y = pyautogui.locateCenterOnScreen('./img/eliminarDiag.png')  # beneficio
             pyautogui.doubleClick(x, y)
             pass
 

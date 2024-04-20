@@ -60,9 +60,11 @@ def ejecutar_scraping():
         if scrape_pami_page(beneficio, parent):
             encontrados += 1
         else:
-            print(f"Beneficio no encontrado: {beneficio}")
+            with open('resultadosPADRON.txt', 'a') as result_file:
+                result_file.write(f"{linea.strip()} - NO ENCONTRADO\n")
 
-    print(f"Total de beneficios encontrados: {encontrados}")
+    with open('resultadosPADRON.txt', 'a') as result_file:
+                result_file.write(f"{encontrados} - TOTAL ENCONTRADOS\n")
 
 # Configuración de la interfaz gráfica
 root = tk.Tk()

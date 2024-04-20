@@ -43,7 +43,7 @@ pyautogui.press('enter')  # en boton ome
 time.sleep(3)
 
 # Leer el archivo de texto y obtener las líneas
-with open('beneficios.txt', 'r') as file:
+with open('aRealizar.txt', 'r') as file:
     lineas = file.readlines()
 
 # Iterar sobre las líneas del archivo
