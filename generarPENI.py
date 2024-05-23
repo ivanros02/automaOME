@@ -29,7 +29,7 @@ def ejecutar():
     time.sleep(2)
     # Entrar a página CUP
     pyautogui.write('https://cup.pami.org.ar/controllers/loginController.php')
-    time.sleep(1)
+    time.sleep(2)
     pyautogui.press('enter')
 
     # Esperar unos segundos para que la página cargue completamente
@@ -54,7 +54,7 @@ def ejecutar():
     for linea in lineas:
         time.sleep(1)
         numero, codigo = linea.strip().split(",")
-        x, y = pyautogui.locateCenterOnScreen('./img/botonOme.png',confidence=0.7) #click en validar
+        x, y = pyautogui.locateCenterOnScreen('./img/botonOme.png',confidence=0.9) #click en validar
         pyautogui.click(x, y)
         time.sleep(5)
         pyautogui.press('tab',presses=10)
@@ -104,7 +104,9 @@ def ejecutar():
             pyautogui.press('enter')
             pyautogui.press('up', presses=4)
             time.sleep(1)
-            x, y = pyautogui.locateCenterOnScreen('./img/eliminarDiag.png')  # beneficio
+            x, y = pyautogui.locateCenterOnScreen('./img/eliminarPractica.png',confidence=0.9)
+            pyautogui.doubleClick(x, y)
+            x, y = pyautogui.locateCenterOnScreen('./img/eliminarDiag.png',confidence=0.9)  
             pyautogui.doubleClick(x, y)
             pass
 

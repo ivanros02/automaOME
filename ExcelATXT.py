@@ -24,7 +24,9 @@ else:
     exit()
 
 # Filtrar el DataFrame por el código seleccionado en la columna 'Código de Práctica'
-df_filtrado = df[df['Código de Práctica'] == codigo]
+# y también por la columna 'Estado' cuando está vacía
+df_filtrado = df[(df['Código de Práctica'] == codigo) & (df['Estado'] != 'cargado')]
+
 
 # Seleccionar las columnas 'Beneficio' y 'Código de Diagnóstico' del DataFrame filtrado
 columnas_seleccionadas = df_filtrado[['Beneficio', 'Código de Diagnóstico']]
